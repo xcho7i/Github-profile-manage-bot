@@ -1,0 +1,47 @@
+{
+  "name": "pull-request-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A bot that continuously creates pull requests for a GitHub repository using pluggable strategies.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node dist/index.js",
+    "dev": "node scripts/manage-badge-bot.js",
+    "master-flow": "cross-env MASTER_FLOW=true tsx src/index.ts",
+    "diagnose": "cross-env RUN_DIAGNOSTICS=true DIAGNOSTICS_ONLY=true tsx src/index.ts",
+    "test-graphql": "node scripts/test-graphql.js",
+    "check-badges": "node scripts/check-badges.js",
+    "check-galaxy-brain": "node scripts/check-galaxy-brain-detailed.js",
+    "add-topics": "node scripts/add-github-topics.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "install:fix": "npm install --ignore-scripts && npx patch-package github-badge-bot",
+    "postinstall": "patch-package"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@octokit/app": "^16.1.1",
+    "@octokit/rest": "^21.0.2",
+    "dotenv": "^16.4.5",
+    "github-badge-bot": "^0.0.1-security",
+    "pino": "^9.3.2",
+    "pino-pretty": "^11.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.27",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "patch-package": "^8.0.1",
+    "postinstall-postinstall": "^2.1.0",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.5.4"
+  }
+}

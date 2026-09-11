@@ -1,0 +1,54 @@
+name: PR Bot
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '*/1 * * * *'
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run bot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPO: ${{ github.event.repository.name }}
+          DEFAULT_BRANCH: main
+          WORKING_BRANCH_PREFIX: bot/
+          SCHEDULE_SECONDS: '60'
+          MASTER_FLOW: 'true'
+          AUTO_MERGE: 'true'
+          MERGE_METHOD: 'squash'
+          YOLO_BADGE_ENABLED: 'false'
+          # Optional overrides:
+          # YOLO_BADGE_LABEL: 'yolo'
+          # YOLO_BADGE_LABEL_COLOR: 'fbca04'
+          # YOLO_BADGE_SHIELD_URL: 'https://img.shields.io/badge/YOLO-auto--merged-fbca04'
+          # YOLO_BADGE_COMMENT_TEXT: 'YOLO badge earned: auto-merged by PR Bot.'
+          ISSUE_FLOW: 'false'
+          ISSUE_INTERVAL_SECONDS: '10'
+          ISSUE_LABEL: 'virtual-certificate'
+          ISSUE_TITLE_TMPL: 'Virtual Certificate: ${timestamp} (${random})'
+          ISSUE_BODY_TMPL: 'Automated virtual certificate (${random}) at ${timestamp}.'
+        run: node dist/index.js
+
